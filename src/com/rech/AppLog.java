@@ -1,16 +1,21 @@
 package com.rech;
 
 import java.util.Scanner;
+
+//See's it isn't used because i have just called static methods
 import com.rech.Util;
+
 
 public class AppLog {
     public static int logLevel = 0;
+    public static int attemptsToSetLogLevel = 5;
 
     public static final int DISABLE_LOG = 0;
     public static final int ERROR_LEVEL = 1;
     public static final int WARNING_LEVEL = 2;
     public static final int ERROR_AND_WARNING = 3;
     public static final int EXIT_PROGRAM = 9;
+    public static Scanner keyboardInput = new Scanner(System.in);
 
     public static void showLogLevelStatus()
     {
@@ -31,38 +36,49 @@ public class AppLog {
                 System.exit(0);
                 break;
             default:
-                Util.print("Invalid log level, please set up again");
+                logLevel = 0;
+                Util.print("Invalid log level, please set up again, log level"
+                        + " set to DISABLED");
+                attemptsToSetLogLevel -= 1;
                 break;
         }
     }
 
     public static void inputLogLevel(int inputtedLogLevel)
     {
-            logLevel = inputtedLogLevel;
+        if(attemptsToSetLogLevel == 0)
+        {
+            Util.print("Your chances are over! \n enter any character to exit");
+            keyboardInput.next();
+            System.exit(0);
+        }
+        logLevel = inputtedLogLevel;
     }
 
     public void run()
     {
         while (true)
         {
-            Scanner keyboardInput = new Scanner(System.in);
+
 
             showLogLevelStatus();
 
-            Util.print("DISABLE log level = 0");
-            Util.print("ERROR log level = 1");
-            Util.print("WARNING log level = 2");
-            Util.print("ERROR and WARNING log level = 3");
-            Util.print("Or enter 9 to exit program.");
-            Util.print("______________________________________");
-            Util.print("Please enter a number: ");
+            Util.print("DISABLE log level = 0"
+                    + "\nERROR log level = 1"
+                    + "\nWARNING log level = 2"
+                    + "\nERROR and WARNING log level = 3"
+                    + "\nOr enter 9 to exit program."
+                    + "\n_____________________________________"
+                    + "\n You have "+ attemptsToSetLogLevel + " left."
+                    + "\nPlease enter a valid number");
 
             try {
                 inputLogLevel(keyboardInput.nextInt());
+                showLogLevelStatus();
             } catch (Exception capturedException) {
                 System.out.println("Please only numbers Error: " + capturedException);
             }
-            System.out.flush();
+
         }
     }
 }

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AppLog:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AppLog_jar</output-path>
+    <root id="archive" name="AppLog.jar">
+      <element id="module-output" name="AppLog" />
+    </root>
+  </artifact>
+</component>
